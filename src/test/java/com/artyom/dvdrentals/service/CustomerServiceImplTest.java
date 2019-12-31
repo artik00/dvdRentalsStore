@@ -1,7 +1,10 @@
 package com.artyom.dvdrentals.service;
 
 import com.artyom.dvdrentals.model.dto.response.FullFilmDetails;
+import com.artyom.dvdrentals.model.dto.response.RentalResponse;
+import com.artyom.dvdrentals.model.entity.Customer;
 import com.artyom.dvdrentals.model.entity.Film;
+import com.artyom.dvdrentals.model.entity.Rental;
 import com.artyom.dvdrentals.model.exception.CustomerNotFoundException;
 import com.artyom.dvdrentals.model.exception.FilmNotFoundException;
 import com.artyom.dvdrentals.model.projections.AvailableFilm;
@@ -19,7 +22,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -94,7 +97,6 @@ public class CustomerServiceImplTest {
                 "1231", "!231" , "van", "asdasd", "east");
         List<CustomerInfoProjection> customerInfoProjections = List.of(customer1);
         Film film = new Film();
-        //FullFilmDetails fullFilmDetail = new FullFilmDetails(film, customerInfoProjections);
         when(filmRepository.findById(0)).thenReturn(Optional.of(film));
         when(customerRepository.findCustomerByFilmId(0)).thenReturn(customerInfoProjections);
         FullFilmDetails fullFilmDetail = customerService.findFilmById(0);
@@ -117,6 +119,46 @@ public class CustomerServiceImplTest {
         assertNotNull(fullFilmDetail);
         assertEquals(0, fullFilmDetail.getFilm().getId());
         assertNull(fullFilmDetail.getListOfCustomerWhoRented());
+    }
+
+    @Test
+    public void testFindRentalsByCustomerId() {
+        Rental rental1 = new Rental("1231", "!23123", 1, "4234",
+                Collections.emptyList(), "313123", "312312");
+        Rental rental2 = new Rental("1231", "!23123", 2, "4234",
+                Collections.emptyList(), "313123", "312312");
+        List<Rental> rentalList = List.of(rental1, rental2);
+        Film film1 = new Film();
+        Film film2 = new Film();
+        Customer customer1 = new Customer(1, "Art", "h",
+                "1231", "!231" , "van", "asdasd", "east", rentalList);
+        when(customerRepository.findById(1)).thenReturn(Optional.of(customer1));
+        when(filmRepository.findById(1)).thenReturn(Optional.of(film1));
+        when(filmRepository.findById(2)).thenReturn(Optional.of(film2));
+        RentalResponse rentalResponse = customerService.findRentalsByCustomerId(1);
+        assertNotNull(rentalResponse);
+        assertEquals(1, rentalResponse.getCustomerId());
+        assertNotNull(rentalResponse.getListOfFilmsRented());
+        assertEquals(2, rentalResponse.getListOfFilmsRented().size());
+    }
+
+
+    @Test
+    public void testFindRentalsByCustomerIdCustomerNotFound() {
+        when(customerRepository.findById(0)).thenReturn(Optional.empty());
+        assertThrows(CustomerNotFoundException.class, () -> customerService.findRentalsByCustomerId(0));
+    }
+
+    @Test
+    public void testFindRentalsByCustomerIdRentalsListIsEmpty() {
+
+        Customer customer1 = new Customer(1, "Art", "h",
+                "1231", "!231" , "van", "asdasd", "east", Collections.emptyList());
+        when(customerRepository.findById(1)).thenReturn(Optional.of(customer1));
+        RentalResponse rentalResponse = customerService.findRentalsByCustomerId(1);
+        assertNotNull(rentalResponse);
+        assertNotNull(rentalResponse.getListOfFilmsRented());
+        assertEquals(0, rentalResponse.getListOfFilmsRented().size());
     }
 
 }

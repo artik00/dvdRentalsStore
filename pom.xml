@@ -15,7 +15,7 @@
     <description>DVD Rentals Rest API</description>
 
     <properties>
-        <java.version>11</java.version>
+        <java.version>1.11</java.version>
         <swagger.version>2.9.2</swagger.version>
         <swagger-annotations.version>1.6.0</swagger-annotations.version>
         <swagger-models.version>1.6.0</swagger-models.version>
@@ -109,9 +109,14 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.8.1</version>
                 <configuration>
-                    <source>1.11</source>
-                    <target>1.11</target>
+                    <source>11</source>
+                    <target>11</target>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>3.0.0-M4</version>
             </plugin>
         </plugins>
     </build>
