@@ -14,8 +14,6 @@ import com.artyom.dvdrentals.model.projections.AvailableFilm;
 import com.artyom.dvdrentals.model.projections.CustomerInfoProjection;
 import com.artyom.dvdrentals.model.repo.CustomerRepository;
 import com.artyom.dvdrentals.model.repo.FilmRepository;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.hateoas.Link;
@@ -32,7 +30,6 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 @Service
 public class CustomerServiceImpl implements CustomerService {
 
-    private static final Logger log = LogManager.getLogger(CustomerServiceImpl.class);
     private CustomerRepository customerRepository;
     private FilmRepository filmRepository;
 
