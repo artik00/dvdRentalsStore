@@ -2,7 +2,7 @@
 Dvd Rentals Store REST API
 
 
-Java 11 is required !!!!
+Java <b>11</b> is required !!!!
 
 
 Requirements :
