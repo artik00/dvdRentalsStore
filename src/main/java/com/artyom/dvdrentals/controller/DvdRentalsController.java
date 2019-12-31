@@ -20,7 +20,6 @@ import springfox.documentation.annotations.ApiIgnore;
 import javax.validation.constraints.NotNull;
 
 
-
 @RestController
 @RequestMapping("/dvdrentals")
 public class DvdRentalsController {

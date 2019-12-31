@@ -4,7 +4,6 @@ import com.artyom.dvdrentals.model.projections.AvailableFilm;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.data.mongodb.core.mapping.Field;
 
 @Data
 @NoArgsConstructor

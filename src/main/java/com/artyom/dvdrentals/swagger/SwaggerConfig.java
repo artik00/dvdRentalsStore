@@ -2,7 +2,7 @@ package com.artyom.dvdrentals.swagger;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Import;
+
 import org.springframework.http.ResponseEntity;
 
 import springfox.documentation.builders.ApiInfoBuilder;
